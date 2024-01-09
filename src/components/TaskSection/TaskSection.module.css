@@ -4,6 +4,8 @@
 
 /* Tasks Progress */
 .taskProgress {
+    padding-bottom: 1.5rem;
+
     display: flex;
     justify-content: space-between;
 }
@@ -26,4 +28,8 @@
 
 .completedTasks {
     color: var(--purple-100);
+}
+
+.task + .task {
+padding-top: .75rem;
 }

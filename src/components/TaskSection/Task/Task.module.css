@@ -1,11 +1,3 @@
-.tasksContainer {
-    padding-top: 1.8rem;
-}
-
-.task+.task {
-    margin-top: .75rem;
-}
-
 .task {
     padding: 1rem;
 
