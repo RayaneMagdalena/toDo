@@ -1,4 +1,4 @@
-import styles from "./Task.module.css"
+import styles from "./Task.module.css";
 import { Trash, Check } from "@phosphor-icons/react";
 
 export interface TaskType {
@@ -9,34 +9,42 @@ export interface TaskType {
 
 interface TaskProps {
   task: TaskType;
+  taskDone: (id: number) => void;
+  deleteTask: (id: number) => void;
 }
 
-export function Task( {task}: TaskProps ) {
+export function Task({ task, taskDone, deleteTask }: TaskProps) {
+  const buttonClass = task.isCompleted 
+  ? styles.completed 
+  : styles.notCompleted;
+
+  const textClass = task.isCompleted
+    ? styles.taskCompleted
+    : styles.taskNotCompleted;
+
+  const checkIconStyle = { display: task.isCompleted ? "" : "none" };
+
   return (
     <section>
       <div className={styles.task}>
-       
         <div className={styles.infoTask}>
-        <button className={styles.notCompleted}></button>
-        <p>{task.text}</p>
+
+          <button 
+          className={buttonClass} 
+          onClick={() => taskDone(task.id)}>
+            <Check size={14} style={checkIconStyle} />
+          </button>
+
+          <p className={textClass}>{task.text}</p>
         </div>
 
-         <button className={styles.trash}>
-        <Trash size={20} />
-         </button>
-      </div>
-
-      {/* <div className={styles.task}>
-       
-       <div className={styles.infoTask}>
-       <button className={styles.completed}><Check size={12} /></button>
-       <p>estudar react</p>
-       </div>
-
-        <button className={styles.trash}>
-       <Trash size={20} />
+        <button 
+        className={styles.trash}
+        onClick={() => deleteTask(task.id)}
+        >
+          <Trash size={20} />
         </button>
-     </div> */}
+      </div>
     </section>
   );
 }

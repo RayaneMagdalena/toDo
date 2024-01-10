@@ -19,6 +19,8 @@ export function Input({newTaskText, setNewTaskText, handleCreateNewTask}: InputP
         handleCreateNewTask(event);
       }
 
+      const isNewTaskEmpty = newTaskText.length === 0;
+
     return (
         <form onSubmit={handleSubmit} className={styles.inputContainer}>
            <input 
@@ -29,7 +31,11 @@ export function Input({newTaskText, setNewTaskText, handleCreateNewTask}: InputP
            onChange={handleInputChange}
            />
 
-           <button type="submit" className={styles.button}>
+           <button 
+           type="submit" 
+           className={styles.button}
+           disabled={isNewTaskEmpty}
+           >
             Criar
            <PlusCircle size={24} />
            </button>

@@ -16,9 +16,14 @@
     gap: 0.75rem;
 }
 
-.infoTask p {
+.taskNotCompleted {
     color: var(--gray-100);
     font-size: 0.875rem;
+}
+
+.taskCompleted {
+    font-size: 0.875rem;
+    text-decoration: line-through;
 }
 
 .notCompleted {

@@ -5,9 +5,11 @@ import { TaskType } from "./Task/Task";
 
 interface TaskSectionProps {
     tasks: TaskType[];
+    taskDone: (id: number) => void;
+    deleteTask: (id: number) => void;
   }
 
-export function TaskSection({ tasks }: TaskSectionProps) {
+export function TaskSection({ tasks, taskDone, deleteTask }: TaskSectionProps) {
     return (
         <section className={styles.taskSection}>
             <div className={styles.taskProgress}>
@@ -19,10 +21,9 @@ export function TaskSection({ tasks }: TaskSectionProps) {
 {tasks.length === 0 ? (
         <NoTasks />
       ) : (
-        // Mapeie as tarefas e renderize o componente Task para cada uma
         tasks.map(task => (
             <div key={task.id} className={styles.task}>
-                <Task  task={task} />
+                <Task  task={task} taskDone={taskDone} deleteTask={deleteTask}/>
             </div>
         ))
       )}
