@@ -1,9 +1,11 @@
 // CSS
 import "./global.css";
+import styles from "./App.module.css"
 // Components
 import { Header } from "./components/Header/Header";
 import { Input } from "./components/Input/Input";
 import { TaskSection } from "./components/TaskSection/TaskSection";
+import Modal from "react-modal";
 // Hooks
 import { useState } from "react";
 
@@ -16,9 +18,11 @@ interface tasks {
 export function App() {
   const [tasks, setTasks] = useState<tasks[]>([]);
   const [newTaskText, setNewTaskText] = useState("");
+  const [modalOpen, setModalOpen] = useState(false);
+  const [taskToDeleteId, setTaskToDeleteId] = useState<number | null>(null);
 
   // Nova Tarefa
-   function handleCreateNewTask() {
+  const handleCreateNewTask = () => {
     const id = Math.floor(Math.random() * 10000);
 
     const newTask: tasks = {
@@ -35,7 +39,7 @@ export function App() {
     ]);
 
     setNewTaskText("");
-  }
+  };
 
   // Tarefa concluída
   const taskDone = (id: number) => {
@@ -54,8 +58,22 @@ export function App() {
 
   // Excluir tarefa
   const deleteTask = (id: number) => {
-    const filteredTasks = tasks.filter((task) => task.id !== id);
+    setTaskToDeleteId(id);
+    setModalOpen(true);
+  };
+
+  // Confirmar exclusão
+  const confirmDelete = () => {
+    const filteredTasks = tasks.filter((task) => task.id !== taskToDeleteId);
     setTasks(filteredTasks);
+    setModalOpen(false);
+    setTaskToDeleteId(null);
+  };
+
+  // Cancelar exclusão
+  const cancelDelete = () => {
+    setModalOpen(false);
+    setTaskToDeleteId(null);
   };
 
   return (
@@ -66,11 +84,16 @@ export function App() {
         setNewTaskText={setNewTaskText}
         handleCreateNewTask={handleCreateNewTask}
       />
-      <TaskSection 
-      tasks={tasks} 
-      taskDone={taskDone} 
-      deleteTask={deleteTask}
-      />
+      <TaskSection tasks={tasks} taskDone={taskDone} deleteTask={deleteTask} />
+
+      {/* Modal de Confirmação */}
+      <Modal isOpen={modalOpen}  className={styles.modalContainer}            overlayClassName={styles.Overlay}>
+        <p>Deseja apagar essa tarefa?</p>
+        <div className={styles.buttonsContainer}>
+        <button onClick={confirmDelete} className={styles.buttonConfirm}>Confirmar</button>
+        <button onClick={cancelDelete} className={styles.buttonCancel}>Cancelar</button>
+        </div>
+      </Modal>
     </div>
   );
 }
