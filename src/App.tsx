@@ -1,13 +1,12 @@
-// CSS
 import "./global.css";
 import styles from "./App.module.css"
-// Components
+
 import { Header } from "./components/Header/Header";
 import { Input } from "./components/Input/Input";
 import { TaskSection } from "./components/TaskSection/TaskSection";
+
+import { useState, useEffect } from "react";
 import Modal from "react-modal";
-// Hooks
-import { useState } from "react";
 
 interface tasks {
   id: number;
@@ -20,6 +19,25 @@ export function App() {
   const [newTaskText, setNewTaskText] = useState("");
   const [modalOpen, setModalOpen] = useState(false);
   const [taskToDeleteId, setTaskToDeleteId] = useState<number | null>(null);
+ 
+   // Salvar tarefas no localStorage
+  const saveTasksToLocalStorage = (tasks: tasks[]) => {
+    localStorage.setItem("tasks", JSON.stringify(tasks));
+  };
+
+     // Carregar tarefas do localStorage ao inicializar
+  useEffect(() => {
+    const storedTasks = localStorage.getItem("tasks");
+    if (storedTasks) {
+      setTasks(JSON.parse(storedTasks));
+    }
+  }, []);
+
+     // Atualizar tarefas e salvar no localStorage
+  const updateTasksAndSave = (newTasks: tasks[]) => {
+    setTasks(newTasks);
+    saveTasksToLocalStorage(newTasks);
+  };
 
   // Nova Tarefa
   const handleCreateNewTask = () => {
@@ -31,15 +49,16 @@ export function App() {
       isCompleted: false,
     };
 
-    // Adiciona e reorganiza as tarefas - concluídas no final
-    setTasks((state) => [
-      ...state.filter((task) => !task.isCompleted),
-      newTask,
-      ...state.filter((task) => task.isCompleted),
-    ]);
+   // Adiciona e reorganiza as tarefas - concluídas no final
+  const updatedTasks = [
+    ...tasks.filter((task) => !task.isCompleted),
+    newTask,
+    ...tasks.filter((task) => task.isCompleted),
+  ];
 
-    setNewTaskText("");
-  };
+  updateTasksAndSave(updatedTasks);
+  setNewTaskText("");
+};
 
   // Tarefa concluída
   const taskDone = (id: number) => {
@@ -66,6 +85,7 @@ export function App() {
   const confirmDelete = () => {
     const filteredTasks = tasks.filter((task) => task.id !== taskToDeleteId);
     setTasks(filteredTasks);
+    saveTasksToLocalStorage(filteredTasks);
     setModalOpen(false);
     setTaskToDeleteId(null);
   };
