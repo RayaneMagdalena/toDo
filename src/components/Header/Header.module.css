@@ -22,3 +22,10 @@
 .do {
     color: var(--PurpleDark, #5E60CE);
 }
+
+/* MEDIA */
+@media (max-width: 546px) {
+.header {
+    height: 9rem;
+}
+}

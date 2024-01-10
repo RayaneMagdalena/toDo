@@ -30,6 +30,31 @@
     color: var(--purple-100);
 }
 
-.task + .task {
-padding-top: .75rem;
+.task+.task {
+    padding-top: .75rem;
+}
+
+/* MEDIA */
+@media (max-width: 546px) {
+    .taskSection {
+        padding: 4rem 2rem;
+    }
+}
+
+@media (max-width: 357px) {
+    .taskSection {
+        padding: 2.5rem 2rem;
+    }
+
+    .taskProgress {
+        flex-direction: column;
+        gap: 1rem;
+
+        padding-bottom: 2rem;
+    }
+
+    .taskProgress p {
+        display: flex;
+        justify-content: space-between;
+    }
 }

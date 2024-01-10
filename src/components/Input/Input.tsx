@@ -36,8 +36,8 @@ export function Input({newTaskText, setNewTaskText, handleCreateNewTask}: InputP
            className={styles.button}
            disabled={isNewTaskEmpty}
            >
-            Criar
-           <PlusCircle size={24} />
+            <p> Criar</p>
+            <PlusCircle size={24} />
            </button>
         </form>
     )

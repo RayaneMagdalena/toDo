@@ -26,18 +26,31 @@
     gap: 2rem;
 }
 
+.textMobile {
+    display: none;
+}
+
 .buttonsContainer {
     display: flex;
     gap: 1.25rem;
 }
 
 .buttonsContainer button {
-    padding: .5rem;
+    padding: .5rem 1.4rem;
     border-radius: .5rem;
     border: none;
-
-    background-color: var(--gray-300);
     background-color: rgba(128, 128, 128, 0.3);
+}
+
+.buttonsContainer button span {
+    display: none;
+}
+
+.buttonConfirm {
+    color: var(--gray-200);
+}
+
+.buttonCancel {
     color: var(--gray-200);
 }
 
@@ -58,4 +71,104 @@
     right: 0;
     bottom: 0;
     background-color: trasnparent;
+
+    backdrop-filter: blur(3px);
 }
+
+/* MEDIA */
+
+@media (max-width: 990px) {
+    .modalContainer {
+        width: 25rem;
+    }
+}
+
+@media (max-width: 800px) {
+    .modalContainer {
+        width: 20rem;
+    }
+}
+
+@media (max-width: 800px) {
+    .modalContainer {
+        height: 7rem;
+        font-size: 1rem;
+        gap: 1.4rem;
+    }
+
+    .buttonsContainer button {
+        font-size: .8rem;
+    }
+}
+
+@media (max-width: 546px) {
+    .modalContainer {
+        font-size: 1.15rem;
+        gap: .8rem;
+
+        top: 32%;
+    }
+
+    .buttonsContainer button {
+        background-color: transparent;
+    }
+
+    .buttonsContainer button span {
+        display: block;
+    }
+
+    .buttonsContainer button p {
+        display: none;
+    }
+
+    .buttonConfirm {
+        color: var(--green-100);
+        cursor: pointer;
+    }
+
+    .buttonCancel {
+        color: var(--red-100);
+        cursor: pointer;
+    }
+
+    .buttonConfirm:hover {
+        background-color: var(--green-200);
+        cursor: pointer;
+    }
+
+    .buttonCancel:hover {
+        background-color: var(--red-200);
+        cursor: pointer;
+    }
+}
+
+@media (max-width: 426px) {
+
+
+    .modalContainer {
+        width: 18rem;
+    }
+}
+
+@media (max-width: 355px) {
+    .modalContainer {
+        width: 14rem;
+        height: 8rem;
+        font-size: 1.2rem;
+        gap: .4rem;
+    }
+   
+    .textDesktop {
+        display: none;
+    }
+    
+    .textMobile {
+        display: block;
+    }
+
+    .buttonsContainer {
+        gap: .5rem;
+    }
+
+}
+

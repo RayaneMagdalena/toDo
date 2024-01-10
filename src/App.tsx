@@ -1,5 +1,5 @@
 import "./global.css";
-import styles from "./App.module.css"
+import styles from "./App.module.css";
 
 import { Header } from "./components/Header/Header";
 import { Input } from "./components/Input/Input";
@@ -7,6 +7,7 @@ import { TaskSection } from "./components/TaskSection/TaskSection";
 
 import { useState, useEffect } from "react";
 import Modal from "react-modal";
+import { CheckCircle, XCircle } from "@phosphor-icons/react";
 
 interface tasks {
   id: number;
@@ -19,13 +20,13 @@ export function App() {
   const [newTaskText, setNewTaskText] = useState("");
   const [modalOpen, setModalOpen] = useState(false);
   const [taskToDeleteId, setTaskToDeleteId] = useState<number | null>(null);
- 
-   // Salvar tarefas no localStorage
+
+  // Salvar tarefas no localStorage
   const saveTasksToLocalStorage = (tasks: tasks[]) => {
     localStorage.setItem("tasks", JSON.stringify(tasks));
   };
 
-     // Carregar tarefas do localStorage ao inicializar
+  // Carregar tarefas do localStorage ao inicializar
   useEffect(() => {
     const storedTasks = localStorage.getItem("tasks");
     if (storedTasks) {
@@ -33,7 +34,7 @@ export function App() {
     }
   }, []);
 
-     // Atualizar tarefas e salvar no localStorage
+  // Atualizar tarefas e salvar no localStorage
   const updateTasksAndSave = (newTasks: tasks[]) => {
     setTasks(newTasks);
     saveTasksToLocalStorage(newTasks);
@@ -49,16 +50,16 @@ export function App() {
       isCompleted: false,
     };
 
-   // Adiciona e reorganiza as tarefas - concluídas no final
-  const updatedTasks = [
-    ...tasks.filter((task) => !task.isCompleted),
-    newTask,
-    ...tasks.filter((task) => task.isCompleted),
-  ];
+    // Adiciona e reorganiza as tarefas - concluídas no final
+    const updatedTasks = [
+      ...tasks.filter((task) => !task.isCompleted),
+      newTask,
+      ...tasks.filter((task) => task.isCompleted),
+    ];
 
-  updateTasksAndSave(updatedTasks);
-  setNewTaskText("");
-};
+    updateTasksAndSave(updatedTasks);
+    setNewTaskText("");
+  };
 
   // Tarefa concluída
   const taskDone = (id: number) => {
@@ -107,11 +108,30 @@ export function App() {
       <TaskSection tasks={tasks} taskDone={taskDone} deleteTask={deleteTask} />
 
       {/* Modal de Confirmação */}
-      <Modal isOpen={modalOpen}  className={styles.modalContainer}            overlayClassName={styles.Overlay}>
-        <p>Deseja apagar essa tarefa?</p>
+      <Modal
+        isOpen={modalOpen}
+        className={styles.modalContainer}
+        overlayClassName={styles.Overlay}
+      >
+        <p className={styles.textDesktop}>Deseja apagar essa tarefa?</p>
+        <p className={styles.textMobile}>Deletar?</p>
+
         <div className={styles.buttonsContainer}>
-        <button onClick={confirmDelete} className={styles.buttonConfirm}>Confirmar</button>
-        <button onClick={cancelDelete} className={styles.buttonCancel}>Cancelar</button>
+        
+          <button onClick={confirmDelete} className={styles.buttonConfirm}>
+            <p>Confirmar</p>
+            <span>
+              <CheckCircle size={30} />
+            </span>
+          </button>
+
+          <button onClick={cancelDelete} className={styles.buttonCancel}>
+            <p> Cancelar</p>
+            <span>
+              <XCircle size={30} />
+            </span>
+          </button>
+       
         </div>
       </Modal>
     </div>
