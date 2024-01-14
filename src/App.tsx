@@ -74,6 +74,7 @@ export function App() {
     ];
 
     setTasks(reorganizedTasks);
+    updateTasksAndSave(reorganizedTasks)
   };
 
   // Excluir tarefa
